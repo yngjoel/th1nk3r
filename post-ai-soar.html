@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -23,9 +23,10 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
 
-      <title>AI‑SOAR + Wazuh: From Toy Demo to Real SOC Powerhouse — Th1nk3r</title>
+      <title>AIâ€‘SOAR + Wazuh: From Toy Demo to Real SOC Powerhouse â€” Th1nk3r</title>
       <meta name="description"
-            content="Building an AI-SOAR pipeline with Wazuh and Tracecat — from POC to production-grade SOC automation." />
+            content="Building an AI-SOAR pipeline with Wazuh and Tracecat â€” from POC to production-grade SOC automation." />
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F4A1;</text></svg>" type="image/svg+xml" />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
@@ -38,7 +39,7 @@
 <body>
       <header class="site-header">
             <div class="container-narrow header-inner">
-                  <a href="index.html" class="logo"><span class="logo-emoji">💡</span><span class="logo-text">Th1nk3r by
+                  <a href="index.html" class="logo"><span class="logo-emoji">ðŸ’¡</span><span class="logo-text">Th1nk3r by
                               Joel Yang</span></a>
                   <nav class="desktop-nav"><a href="index.html">Home</a><a href="about.html">About</a><button
                               class="theme-toggle" aria-label="Toggle theme"><span
@@ -57,8 +58,8 @@
                   <a href="index.html" class="back-link"><span class="material-symbols-outlined">arrow_back</span> Back
                         to Blog</a>
                   <article>
-                        <div class="post-category"><span>AI</span><span>•</span><span>SOAR</span></div>
-                        <h1 class="post-title">AI‑SOAR + Wazuh: From Toy Demo to Real SOC Powerhouse</h1>
+                        <div class="post-category"><span>AI</span><span>â€¢</span><span>SOAR</span></div>
+                        <h1 class="post-title">AIâ€‘SOAR + Wazuh: From Toy Demo to Real SOC Powerhouse</h1>
                         <div class="post-meta">
                               <div class="post-author">
                                     <div class="post-avatar"><img
@@ -86,14 +87,14 @@
                                           steps.</li>
                                     <li><strong>Enrichment on tap:</strong> CVE, package age, vendor advisories, TI
                                           pivots.</li>
-                                    <li><strong>Decisioning:</strong> "Is this risky enough to wake someone up?" →
+                                    <li><strong>Decisioning:</strong> "Is this risky enough to wake someone up?" â†’
                                           scored.</li>
                                     <li><strong>Action:</strong> Kick Active Response, open a case, ping
                                           Slack/Jira/Discord.</li>
                               </ul>
 
                               <h2 class="font-mono">What We Built (POC Recap)</h2>
-                              <p><strong>Goal:</strong> Pull Syscollector → Packages for an agent, ask AI to rank risk,
+                              <p><strong>Goal:</strong> Pull Syscollector â†’ Packages for an agent, ask AI to rank risk,
                                     then ship a compact case/alert.</p>
                               <p><strong>Stack:</strong> Wazuh Manager (telemetry), Tracecat (AI-SOAR), OpenAI
                                     gpt-4o-mini (reasoning), Discord (demo output).</p>
@@ -151,7 +152,7 @@
                                           a native OpenSearch starter kit lands.</p>
                               </blockquote>
 
-                              <h2 class="font-mono">Step 4: AI Analysis → Structured Case Payload</h2>
+                              <h2 class="font-mono">Step 4: AI Analysis â†’ Structured Case Payload</h2>
                               <p>Feed packages into the AI for risk-ranked, schema-constrained output:</p>
                               <div class="code-block">
                                     <div class="code-block-header"><span class="code-block-filename">tracecat-action:
@@ -198,15 +199,15 @@
 
                               <h2 class="font-mono">Production-Grade Upgrades</h2>
                               <ul>
-                                    <li><strong>Role-based guardrails</strong> — split read vs response; gate high-blast
+                                    <li><strong>Role-based guardrails</strong> â€” split read vs response; gate high-blast
                                           actions behind humans.</li>
-                                    <li><strong>Prompt hardening</strong> — enforce strict JSON + schema; add few-shot
+                                    <li><strong>Prompt hardening</strong> â€” enforce strict JSON + schema; add few-shot
                                           examples.</li>
-                                    <li><strong>Idempotency + retries</strong> — use correlation IDs, cache tokens,
+                                    <li><strong>Idempotency + retries</strong> â€” use correlation IDs, cache tokens,
                                           backoff on failures.</li>
-                                    <li><strong>Observability</strong> — emit metrics (latency, token usage), log full
+                                    <li><strong>Observability</strong> â€” emit metrics (latency, token usage), log full
                                           I/O to secure storage.</li>
-                                    <li><strong>Secrets &amp; compliance</strong> — creds in KMS; scrub PII before AI
+                                    <li><strong>Secrets &amp; compliance</strong> â€” creds in KMS; scrub PII before AI
                                           calls.</li>
                               </ul>
 
@@ -249,7 +250,7 @@
             <div class="container-narrow footer-bottom">
                   <div>
                         <div class="author-name">Joel Yang</div><span
-                              style="font-size:0.75rem;color:var(--text-muted);">© 2026. All rights reserved.</span>
+                              style="font-size:0.75rem;color:var(--text-muted);">Â© 2026. All rights reserved.</span>
                   </div>
                   <div class="footer-bottom-links"><a href="#">Twitter</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
                   </div>
