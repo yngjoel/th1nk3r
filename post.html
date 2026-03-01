@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+      <title>Why Wazuh Was the Only SIEM I Ever Needed — Th1nk3r</title>
+      <meta name="description"
+            content="When I first started working with SIEMs, Wazuh became my gateway into log management, threat detection, and security automation." />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+      <header class="site-header">
+            <div class="container-narrow header-inner">
+                  <a href="index.html" class="logo"><span class="logo-emoji">💡</span><span class="logo-text">Th1nk3r by
+                              Joel Yang</span></a>
+                  <nav class="desktop-nav">
+                        <a href="index.html">Home</a>
+                        <a href="about.html">About</a>
+                        <button class="theme-toggle" aria-label="Toggle theme"><span
+                                    class="material-symbols-outlined">lightbulb</span></button>
+                  </nav>
+                  <button class="mobile-menu-btn" aria-label="Open menu"><span
+                              class="material-symbols-outlined">menu</span></button>
+            </div>
+            <nav class="mobile-nav container-narrow">
+                  <a href="index.html">Home</a>
+                  <a href="about.html">About</a>
+                  <button class="theme-toggle" aria-label="Toggle theme"
+                        style="align-self:flex-start;margin-top:8px;"><span
+                              class="material-symbols-outlined">lightbulb</span></button>
+            </nav>
+      </header>
+
+      <main class="main-content">
+            <div class="container-narrow" style="padding-top:16px;padding-bottom:64px;">
+                  <a href="index.html" class="back-link"><span class="material-symbols-outlined">arrow_back</span> Back
+                        to Blog</a>
+
+                  <article>
+                        <div class="post-category"><span>Cybersecurity</span><span>•</span><span>SIEM</span></div>
+                        <h1 class="post-title">Why Wazuh Was the Only SIEM I Ever Needed</h1>
+                        <div class="post-meta">
+                              <div class="post-author">
+                                    <div class="post-avatar"><img
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpEpqXRf9MrIYskZwQ328luZjewXS6t68YvEfqnZR9LUVB8cMy2mOqRy-E6wqmXRv7L7I9ISRkRpsagVyy4gRitZijJ88qtrPSydvUAwNXwlvfjvxOSbXsPBAvrFVHLU-EZgkh0q46eEEGGDh5eOMYoeF82ndACqzW_oajVG_GOBLv9xRQc93b0584NP8CXhW7INCFlQhTVy9lCed78y7mD6lnCDS0oVlBzckHoEQioyeTP4GS6iCQNrFJXGS_ckYJ9rAQsOVqnq0"
+                                                alt="Joel Yang" /></div>
+                                    <div>
+                                          <div class="author-name">Joel Yang</div>
+                                          <div class="author-role">Security Engineer</div>
+                                    </div>
+                              </div>
+                              <div class="post-date-info">
+                                    <div class="post-date">Feb 24, 2025</div>
+                                    <div class="post-read-time">3 min read</div>
+                              </div>
+                        </div>
+
+                        <div class="post-body">
+                              <p>When I first started working with SIEMs, I had zero experience with tools like Splunk,
+                                    QRadar, or Sentinel. <strong>Wazuh</strong> — a free, open-source platform — became
+                                    my gateway into log management, threat detection, and security automation. While
+                                    commercial SIEMs dazzled with promises of "plug-and-play" features, Wazuh taught me
+                                    the engineering behind security monitoring. Here's why it became my long-term
+                                    solution.</p>
+
+                              <h2 class="font-mono">Open Source = Full Control</h2>
+                              <p>Open-source flexibility eliminates vendor lock-in and provides full transparency in
+                                    security monitoring. With Wazuh, I could inspect every rule, every decoder, every
+                                    integration. No black boxes. No hidden costs. No surprise licensing changes that
+                                    break your budget mid-year.</p>
+
+                              <h2 class="font-mono">Cost? What Cost?</h2>
+                              <p>Being free means resources can be spent on hardware, training, and actually improving
+                                    your security posture — rather than funnelling money into per-GB log ingestion fees
+                                    or feature paywalls. For SMEs and startups, this is a game-changer.</p>
+
+                              <h2 class="font-mono">Wazuh Taught Me Real Engineering</h2>
+                              <p>Manual rule-building and alert tuning forced a deeper understanding of SIEM
+                                    fundamentals. Instead of clicking through a wizard, I was writing XML decoders,
+                                    crafting custom rules, and understanding exactly <em>why</em> an alert fired. That
+                                    knowledge transfers to any platform.</p>
+
+                              <h2 class="font-mono">Scaling: On-Prem vs. Cloud Reality Check</h2>
+                              <p>Wazuh gave me the flexibility to deploy on physical hardware or cloud environments
+                                    without scaling costs spiralling out of control. Whether it's a small lab or a
+                                    multi-node cluster, the architecture adapts to your needs — not the other way
+                                    around.</p>
+
+                              <h2 class="font-mono">The Community Is the Secret Sauce</h2>
+                              <p>The Wazuh community and documentation are genuinely world-class for an open-source
+                                    project. Instead of waiting on corporate support tickets, I found answers in Slack
+                                    channels, GitHub issues, and community forums — often within hours.</p>
+
+                              <h2 class="font-mono">Flaws? Sure. Dealbreakers? Never.</h2>
+                              <p>Is the setup complex? Yes — there's no one-click install. Does OpenSearch need tuning?
+                                    Absolutely. Is there built-in AI-driven analytics? Not yet. But every one of those
+                                    "flaws" taught me something valuable about security engineering. They're features in
+                                    disguise.</p>
+
+                              <blockquote>
+                                    <p>"I didn't choose Wazuh over commercial tools — it just never let me down. It's
+                                          flexible, free, and forces you to master the nuts and bolts of security
+                                          engineering. Will I try Splunk or Sentinel someday? Maybe. But for now, Wazuh
+                                          does it all."</p>
+                              </blockquote>
+
+                              <p>What about you? Have you used Wazuh or other SIEMs? Share your wins, gripes, or
+                                    questions below!</p>
+                        </div>
+
+                        <div class="post-tags">
+                              <a href="#" class="post-tag">#cybersecurity</a>
+                              <a href="#" class="post-tag">#siem</a>
+                              <a href="#" class="post-tag">#log-management</a>
+                              <a href="#" class="post-tag">#threat-detection</a>
+                              <a href="#" class="post-tag">#open-source</a>
+                        </div>
+
+                        <div class="newsletter">
+                              <div class="newsletter-icon"><span class="material-symbols-outlined">mail</span></div>
+                              <h3>Subscribe to my newsletter</h3>
+                              <p>Get the latest articles on cybersecurity, SIEM engineering, and developer tools
+                                    delivered to your inbox.</p>
+                              <form class="newsletter-form" action="https://formspree.io/f/mgolbkjp" method="POST"><input type="email"
+                                          name="email" class="newsletter-input" placeholder="your@email.com" /><button type="submit"
+                                          class="btn-primary">Subscribe</button></form>
+                        </div>
+                  </article>
+
+                  <nav class="post-nav">
+                        <a href="index.html" class="post-nav-link"><span class="post-nav-label">← All Posts</span><span
+                                    class="post-nav-title">Back to Blog</span></a>
+                        <a href="post-tig-stack.html" class="post-nav-link next"><span class="post-nav-label">Next
+                                    Post</span><span class="post-nav-title">Mastering Wazuh Monitoring with the TIG
+                                    Stack</span></a>
+                  </nav>
+            </div>
+      </main>
+
+      <footer class="site-footer">
+            <div class="container-narrow footer-bottom">
+                  <div>
+                        <div class="author-name">Joel Yang</div><span
+                              style="font-size:0.75rem;color:var(--text-muted);">© 2025. All rights reserved.</span>
+                  </div>
+                  <div class="footer-bottom-links"><a href="#">Twitter</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
+                  </div>
+            </div>
+      </footer>
+      <script src="script.js"></script>
+</body>
+
+</html>

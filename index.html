@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+  <title>Th1nk3r — Blog by Joel Yang</title>
+  <meta name="description"
+    content="Th1nk3r blog by Joel Yang — cybersecurity, SIEM engineering, AI, and developer insights." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" crossorigin="anonymous" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container-narrow header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-emoji">💡</span>
+        <span class="logo-text">Th1nk3r by Joel Yang</span>
+      </a>
+      <nav class="desktop-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="material-symbols-outlined">lightbulb</span>
+        </button>
+      </nav>
+      <button class="mobile-menu-btn" aria-label="Open menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+    <nav class="mobile-nav container-narrow">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <button class="theme-toggle" aria-label="Toggle theme" style="align-self:flex-start;margin-top:8px;">
+        <span class="material-symbols-outlined">lightbulb</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container-narrow">
+      <h1 class="hero-title">Th1nk3r</h1>
+      <p class="hero-tagline">Cybersecurity, SIEM Engineering, AI &amp; Developer Insights</p>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <main class="main-content">
+    <div class="container-narrow" style="padding-bottom:64px;">
+
+      <!-- Article 8: The Linguistic Frontier (newest) -->
+      <a href="post-linguistic-frontier.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">The Linguistic Frontier: Strategic Evolution of Threat Intelligence</h2>
+            <span class="article-card-date">Mar 1, 2026</span>
+          </div>
+          <p class="article-card-excerpt">Language is the new executable. How TIPs are pivoting from file-centric to
+            linguistics-centric defense in the agentic AI era.</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">Threat Intelligence</span>
+              <span class="tag">AI Security</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 7: PCI DSS -->
+      <a href="post-pci-dss.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">How a PCI DSS Audit Made Me Rethink Wazuh</h2>
+            <span class="article-card-date">Nov 12, 2025</span>
+          </div>
+          <p class="article-card-excerpt">A verified, technical walkthrough of preparing Wazuh SIEM evidence for PCI DSS
+            — from logs and FIM to RBAC and alerting.</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">Compliance</span>
+              <span class="tag">SIEM</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 6: AI-SOAR -->
+      <a href="post-ai-soar.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">AI‑SOAR + Wazuh: From Toy Demo to Real SOC Powerhouse</h2>
+            <span class="article-card-date">Oct 8, 2025</span>
+          </div>
+          <p class="article-card-excerpt">Building an AI-SOAR pipeline with Wazuh and Tracecat — auto-triage, AI risk
+            scoring, and production-grade SOC automation.</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">AI</span>
+              <span class="tag">SOAR</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 5: AI Agents vs SOC -->
+      <a href="post-ai-soc.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">AI Agents vs. Level-1 SOC Analysts</h2>
+            <span class="article-card-date">Apr 27, 2025</span>
+          </div>
+          <p class="article-card-excerpt">Augmentation, automation, or obsolescence? Comparing AI SOC agents with human
+            analysts and the rise of the "Centaur Analyst."</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">AI</span>
+              <span class="tag">Security Operations</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 4: Black Hat Asia -->
+      <a href="post-blackhat.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">Kali Purple Hub, MALCOLM &amp; Autopilot at Black Hat Asia 2025</h2>
+            <span class="article-card-date">Apr 9, 2025</span>
+          </div>
+          <p class="article-card-excerpt">A hands-on Kali Purple workshop showcasing a full SOC simulation in a box —
+            detection engineering, incident response, and threat hunting.</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">Blue Team</span>
+              <span class="tag">Conference</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 3: F1 AI -->
+      <a href="post-f1-ai.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">F1 Meets AI: Predicting the Australian Grand Prix 2025 🏎️</h2>
+            <span class="article-card-date">Mar 10, 2025</span>
+          </div>
+          <p class="article-card-excerpt">Using Logistic Regression and Random Forest to predict the race winner — and
+            the lessons learned about class imbalance in sports analytics.</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Sports Analytics</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 2: TIG Stack -->
+      <a href="post-tig-stack.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">Mastering Wazuh Monitoring with the TIG Stack</h2>
+            <span class="article-card-date">Mar 2, 2025</span>
+          </div>
+          <p class="article-card-excerpt">Telegraf, InfluxDB, and Grafana — the open-source monitoring stack that pairs
+            perfectly with Wazuh for real-time visibility.</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">DevOps</span>
+              <span class="tag">Monitoring</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Article 1: Wazuh SIEM (oldest) -->
+      <a href="post.html" class="article-card">
+        <div class="article-card-body">
+          <div class="article-card-header">
+            <h2 class="article-card-title">Why Wazuh Was the Only SIEM I Ever Needed</h2>
+            <span class="article-card-date">Feb 24, 2025</span>
+          </div>
+          <p class="article-card-excerpt">When commercial SIEMs promised plug-and-play, Wazuh taught me the engineering
+            behind security monitoring — and never let me down.</p>
+          <div class="article-card-footer">
+            <div class="article-card-tags">
+              <span class="tag">Cybersecurity</span>
+              <span class="tag">SIEM</span>
+            </div>
+            <span class="article-card-arrow material-symbols-outlined">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container-narrow footer-bottom">
+      <div>
+        <div class="author-name">Joel Yang</div>
+        <span style="font-size:0.75rem;color:var(--text-muted);">© 2025. All rights reserved.</span>
+      </div>
+      <div class="footer-bottom-links">
+        <a href="#">Twitter</a>
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

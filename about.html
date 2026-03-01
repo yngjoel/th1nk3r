@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+      <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+      <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+      <meta http-equiv="X-Frame-Options" content="DENY" />
+      <meta name="referrer" content="strict-origin-when-cross-origin" />
+      <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+      <title>About — Th1nk3r</title>
+      <meta name="description"
+            content="Joel Yang — Cybersecurity Engineer based in KL. Cloud security, AI, and open-source defense." />
+
+      <!-- Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+
+      <!-- Styles -->
+      <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+      <!-- ============ Header ============ -->
+      <header class="site-header">
+            <div class="container header-inner">
+                  <a href="index.html" class="logo">
+                        <span class="logo-emoji">💡</span>
+                        <span class="logo-text">Th1nk3r by Joel Yang</span>
+                  </a>
+
+                  <nav class="desktop-nav">
+                        <a href="index.html">Home</a>
+                        <a href="index.html#articles">Articles</a>
+                        <a href="about.html" class="active">About</a>
+                        <button class="theme-toggle" aria-label="Toggle theme">
+                              <span class="material-symbols-outlined">lightbulb</span>
+                        </button>
+                  </nav>
+
+                  <button class="mobile-menu-btn" aria-label="Open menu">
+                        <span class="material-symbols-outlined">menu</span>
+                  </button>
+            </div>
+
+            <nav class="mobile-nav container">
+                  <a href="index.html">Home</a>
+                  <a href="index.html#articles">Articles</a>
+                  <a href="about.html" class="active">About</a>
+                  <button class="theme-toggle" aria-label="Toggle theme" style="align-self:flex-start;margin-top:8px;">
+                        <span class="material-symbols-outlined">lightbulb</span>
+                  </button>
+            </nav>
+      </header>
+
+      <!-- ============ Main ============ -->
+      <main class="main-content">
+            <div class="page-content">
+                  <div class="about-sections">
+
+                        <!-- Profile Hero -->
+                        <section class="about-hero">
+                              <div class="about-avatar-wrap">
+                                    <div class="about-avatar">
+                                          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEenXpYtkEWrxfZ7gtJv-Ch8XbXg4-k5C904hPYVdamgLh-47VeoNM4enTLfm72sxq0Z8z-ydyjsC47jiz3QE4kBCENMoUdmkgfwwQNXfmuFD-nPY4hrtYN7pM2q2xuMeTixIdAKT2lvoMWrNQSXp9zRTIla_OozS0t6SpoXY83omvYw8JiTpLjM1Y5nCIH7z8eUps3VYMO6E7HQiVjuMNuQXstGAGXDPyhe-EGvKgY_OfKUrzsvSn8fd0L_VjT2RknEm7Rn3YLAA"
+                                                alt="Joel Yang" />
+                                    </div>
+                                    <div class="about-avatar-badge">
+                                          <span class="material-symbols-outlined">code</span>
+                                    </div>
+                              </div>
+
+                              <div class="about-info">
+                                    <h1>Joel Yang</h1>
+                                    <p class="role">Cybersecurity Engineer</p>
+                                    <p class="bio-short">Focused on R&amp;D and the evolving world of LLMs. I build
+                                          secure, scalable systems that turn data chaos into simple, effective defense.
+                                    </p>
+                                    <div class="social-links">
+                                          <a href="https://github.com/yngjoel" rel="noopener noreferrer" target="_blank"
+                                                class="social-link">
+                                                <span class="material-symbols-outlined">code_blocks</span> GitHub
+                                          </a>
+                                          <a href="https://www.linkedin.com/in/joelyangzw/" rel="noopener noreferrer"
+                                                target="_blank" class="social-link">
+                                                <span class="material-symbols-outlined">work</span> LinkedIn
+                                          </a>
+                                          <a href="https://x.com/ice_jzw" rel="noopener noreferrer" target="_blank"
+                                                class="social-link">
+                                                <span class="material-symbols-outlined">alternate_email</span> X
+                                          </a>
+                                          <a href="https://medium.com/@yzw.joe" rel="noopener noreferrer"
+                                                target="_blank" class="social-link">
+                                                <span class="material-symbols-outlined">edit_note</span> Medium
+                                          </a>
+                                    </div>
+                              </div>
+                        </section>
+
+                        <!-- Terminal Intro -->
+                        <section>
+                              <div class="section-header">
+                                    <span class="material-symbols-outlined">terminal</span>
+                                    <h2>joel@kl-base:~$</h2>
+                              </div>
+
+                              <!-- Block 1: list_specs.sh -->
+                              <div class="code-block" style="margin-bottom:24px;">
+                                    <div class="code-block-header"><span class="code-block-filename">./list_specs.sh
+                                                --no-fluff</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-comment">[SYSTEM SPECS]</span>
+- <span class="syn-string">AI &amp; LLMs</span>: Building and breaking with LLMs for smarter defense.
+- <span class="syn-string">Data Clarity</span>: Turning log chaos into actual signal.
+- <span class="syn-string">Cyber Defense</span>: Keeping things airtight and hardening for what's next.
+- <span class="syn-string">Status</span>: 1% Better Every Day / Zero corporate fluff.</code></pre>
+                              </div>
+
+                              <!-- Block 2: whoami -->
+                              <div class="code-block" style="margin-bottom:24px;">
+                                    <div class="code-block-header"><span class="code-block-filename">whoami
+                                                --verbose</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code>{
+  <span class="syn-string">"status"</span>: <span class="syn-string">"In the Lab"</span>,
+  <span class="syn-string">"vibe"</span>: <span class="syn-string">"Building &gt; Talking"</span>,
+  <span class="syn-string">"mission"</span>: <span class="syn-string">"Turning data chaos into defensive clarity."</span>,
+  <span class="syn-string">"currently"</span>: <span class="syn-string">"Working on something new. [REDACTED]"</span>
+}</code></pre>
+                              </div>
+
+                              <!-- Block 3: vibe check -->
+                              <div class="code-block">
+                                    <div class="code-block-header"><span
+                                                class="code-block-filename">./get_vibe_check.sh</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-comment">&gt; 🏃 Running trails to clear the cache.</span>
+<span class="syn-comment">&gt; 🎬 Chilling with OG movies (no sequels allowed).</span>
+<span class="syn-comment">&gt; 🍺 100% Better with a Cold Beer.</span>
+<span class="syn-comment">&gt; 🛠️ Ops -&gt; R&amp;D: Same curiosity, different stack.</span></code></pre>
+                              </div>
+                        </section>
+
+                        <!-- Tech Stack -->
+                        <section class="stack-section">
+                              <p class="stack-label">Current Stack</p>
+                              <div class="stack-tags">
+                                    <span class="stack-tag">Python</span>
+                                    <span class="stack-tag">Wazuh</span>
+                                    <span class="stack-tag">AWS</span>
+                                    <span class="stack-tag">Docker</span>
+                                    <span class="stack-tag">OpenSearch</span>
+                                    <span class="stack-tag">Tailwind</span>
+                                    <span class="stack-tag">Jira</span>
+                                    <span class="stack-tag">TIG Stack</span>
+                                    <span class="stack-tag">LLMs</span>
+                                    <span class="stack-tag">Google Antigravity</span>
+                                    <span class="stack-tag">AI-Agent</span>
+                                    <span class="stack-tag">Automated Workflows</span>
+                              </div>
+                        </section>
+
+                  </div>
+            </div>
+      </main>
+
+      <!-- ============ Footer ============ -->
+      <footer class="site-footer">
+            <div class="container footer-bottom">
+                  <p style="font-size:0.875rem;color:var(--text-muted);">© 2024 Joel Yang. All rights reserved.</p>
+                  <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                  </div>
+            </div>
+      </footer>
+
+      <script src="script.js"></script>
+</body>
+
+</html>

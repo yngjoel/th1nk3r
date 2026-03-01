@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+      <title>AI‑SOAR + Wazuh: From Toy Demo to Real SOC Powerhouse — Th1nk3r</title>
+      <meta name="description"
+            content="Building an AI-SOAR pipeline with Wazuh and Tracecat — from POC to production-grade SOC automation." />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+      <header class="site-header">
+            <div class="container-narrow header-inner">
+                  <a href="index.html" class="logo"><span class="logo-emoji">💡</span><span class="logo-text">Th1nk3r by
+                              Joel Yang</span></a>
+                  <nav class="desktop-nav"><a href="index.html">Home</a><a href="about.html">About</a><button
+                              class="theme-toggle" aria-label="Toggle theme"><span
+                                    class="material-symbols-outlined">lightbulb</span></button></nav>
+                  <button class="mobile-menu-btn" aria-label="Open menu"><span
+                              class="material-symbols-outlined">menu</span></button>
+            </div>
+            <nav class="mobile-nav container-narrow"><a href="index.html">Home</a><a href="about.html">About</a><button
+                        class="theme-toggle" aria-label="Toggle theme"
+                        style="align-self:flex-start;margin-top:8px;"><span
+                              class="material-symbols-outlined">lightbulb</span></button></nav>
+      </header>
+
+      <main class="main-content">
+            <div class="container-narrow" style="padding-top:16px;padding-bottom:64px;">
+                  <a href="index.html" class="back-link"><span class="material-symbols-outlined">arrow_back</span> Back
+                        to Blog</a>
+                  <article>
+                        <div class="post-category"><span>AI</span><span>•</span><span>SOAR</span></div>
+                        <h1 class="post-title">AI‑SOAR + Wazuh: From Toy Demo to Real SOC Powerhouse</h1>
+                        <div class="post-meta">
+                              <div class="post-author">
+                                    <div class="post-avatar"><img
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpEpqXRf9MrIYskZwQ328luZjewXS6t68YvEfqnZR9LUVB8cMy2mOqRy-E6wqmXRv7L7I9ISRkRpsagVyy4gRitZijJ88qtrPSydvUAwNXwlvfjvxOSbXsPBAvrFVHLU-EZgkh0q46eEEGGDh5eOMYoeF82ndACqzW_oajVG_GOBLv9xRQc93b0584NP8CXhW7INCFlQhTVy9lCed78y7mD6lnCDS0oVlBzckHoEQioyeTP4GS6iCQNrFJXGS_ckYJ9rAQsOVqnq0"
+                                                alt="Joel Yang" /></div>
+                                    <div>
+                                          <div class="author-name">Joel Yang</div>
+                                          <div class="author-role">Security Engineer</div>
+                                    </div>
+                              </div>
+                              <div class="post-date-info">
+                                    <div class="post-date">Oct 8, 2025</div>
+                                    <div class="post-read-time">4 min read</div>
+                              </div>
+                        </div>
+
+                        <div class="post-body">
+                              <p>With Wazuh as your telemetry + response backbone and <strong>Tracecat</strong> as the
+                                    workflow brain, you get a SOC copilot that actually ships. This post turns a simple
+                                    POC into a blueprint you can deploy.</p>
+
+                              <h2 class="font-mono">Why This Matters</h2>
+                              <ul>
+                                    <li><strong>Auto-triage:</strong> LLMs summarize noisy findings into crisp next
+                                          steps.</li>
+                                    <li><strong>Enrichment on tap:</strong> CVE, package age, vendor advisories, TI
+                                          pivots.</li>
+                                    <li><strong>Decisioning:</strong> "Is this risky enough to wake someone up?" →
+                                          scored.</li>
+                                    <li><strong>Action:</strong> Kick Active Response, open a case, ping
+                                          Slack/Jira/Discord.</li>
+                              </ul>
+
+                              <h2 class="font-mono">What We Built (POC Recap)</h2>
+                              <p><strong>Goal:</strong> Pull Syscollector → Packages for an agent, ask AI to rank risk,
+                                    then ship a compact case/alert.</p>
+                              <p><strong>Stack:</strong> Wazuh Manager (telemetry), Tracecat (AI-SOAR), OpenAI
+                                    gpt-4o-mini (reasoning), Discord (demo output).</p>
+
+                              <h2 class="font-mono">Step 1: Get a Wazuh JWT Token</h2>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">tracecat-action:
+                                                get_manager_token</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-comment"># ACTION: get_manager_token</span>
+<span class="syn-type">function</span>: core.http_request
+<span class="syn-type">with</span>:
+  method: <span class="syn-string">GET</span>
+  url: <span class="syn-string">https://&lt;wazuh-manager&gt;:55000/security/user/authenticate?raw=true</span>
+  auth:
+    username: <span class="syn-string">wazuh</span>
+    password: <span class="syn-string">&lt;password&gt;</span>
+  verify_ssl: <span class="syn-keyword">false</span>
+  timeout: <span class="syn-number">20</span></code></pre>
+                              </div>
+
+                              <h2 class="font-mono">Step 2: Extract the Token</h2>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">tracecat-action:
+                                                extract_token</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-comment"># ACTION: extract_token</span>
+<span class="syn-type">function</span>: core.transform.reshape
+<span class="syn-type">with</span>:
+  value: ${{ ACTIONS.get_manager_token.result.data }}</code></pre>
+                              </div>
+
+                              <h2 class="font-mono">Step 3: Pull Syscollector Packages</h2>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">tracecat-action:
+                                                get_agent_packages</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-comment"># ACTION: get_agent_packages</span>
+<span class="syn-type">function</span>: core.http_request
+<span class="syn-type">with</span>:
+  url: <span class="syn-string">https://&lt;wazuh-manager&gt;:55000/syscollector/&lt;AGENT_ID&gt;/packages</span>
+  method: <span class="syn-string">GET</span>
+  headers:
+    Authorization: <span class="syn-string">Bearer ${{ ACTIONS.extract_token.result }}</span>
+    Content-Type: <span class="syn-string">application/json</span>
+  verify_ssl: <span class="syn-keyword">false</span></code></pre>
+                              </div>
+
+                              <blockquote>
+                                    <p><strong>Tip:</strong> Use the Manager API when you can. If you need raw search
+                                          power across alerts, hit the Indexer via <code>core.http_request</code> until
+                                          a native OpenSearch starter kit lands.</p>
+                              </blockquote>
+
+                              <h2 class="font-mono">Step 4: AI Analysis → Structured Case Payload</h2>
+                              <p>Feed packages into the AI for risk-ranked, schema-constrained output:</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">tracecat-action:
+                                                core.ai.agent</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-comment"># ACTION: core.ai.agent</span>
+<span class="syn-type">with</span>:
+  model_provider: <span class="syn-string">openai</span>
+  model_name: <span class="syn-string">gpt-4o-mini</span>
+  user_prompt: |
+    You are a SOC analyst. Input is Wazuh Syscollector
+    <span class="syn-string">"packages"</span> JSON for one agent.
+    Output ONLY valid JSON with this exact shape:
+    {
+      <span class="syn-string">"summary"</span>: <span class="syn-string">"Short human-readable overview (&lt;= 6 lines)"</span>,
+      <span class="syn-string">"case"</span>: {
+        <span class="syn-string">"title"</span>: <span class="syn-string">"Recommended case title"</span>,
+        <span class="syn-string">"severity"</span>: <span class="syn-string">"low|medium|high|critical"</span>,
+        <span class="syn-string">"tags"</span>: [<span class="syn-string">"wazuh"</span>, <span class="syn-string">"packages"</span>, <span class="syn-string">"syscollector"</span>],
+        <span class="syn-string">"comment"</span>: <span class="syn-string">"Top risky/outdated packages + remediation"</span>
+      }
+    }</code></pre>
+                              </div>
+
+                              <h2 class="font-mono">Step 5: Ship It</h2>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">tracecat-action:
+                                                post_discord</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-comment"># ACTION: post_discord</span>
+<span class="syn-type">function</span>: core.http_request
+<span class="syn-type">with</span>:
+  method: <span class="syn-string">POST</span>
+  url: <span class="syn-string">https://discord.com/api/webhooks/&lt;id&gt;/&lt;token&gt;</span>
+  headers:
+    Content-Type: <span class="syn-string">application/json</span>
+  json:
+    content: ${{ ACTIONS.ai_package_review.result.summary }}</code></pre>
+                              </div>
+                              <p>In production, point that payload at Jira/ServiceNow, create a case in TheHive, or
+                                    invoke Wazuh Active Response.</p>
+
+                              <h2 class="font-mono">Production-Grade Upgrades</h2>
+                              <ul>
+                                    <li><strong>Role-based guardrails</strong> — split read vs response; gate high-blast
+                                          actions behind humans.</li>
+                                    <li><strong>Prompt hardening</strong> — enforce strict JSON + schema; add few-shot
+                                          examples.</li>
+                                    <li><strong>Idempotency + retries</strong> — use correlation IDs, cache tokens,
+                                          backoff on failures.</li>
+                                    <li><strong>Observability</strong> — emit metrics (latency, token usage), log full
+                                          I/O to secure storage.</li>
+                                    <li><strong>Secrets &amp; compliance</strong> — creds in KMS; scrub PII before AI
+                                          calls.</li>
+                              </ul>
+
+                              <blockquote>
+                                    <p>"Tracecat makes the wiring easy; Wazuh brings reach and muscle. Add a disciplined
+                                          AI layer and you've got a SOC copilot that reduces noise, speeds response, and
+                                          documents everything without drama."</p>
+                              </blockquote>
+                        </div>
+
+                        <div class="post-tags">
+                              <a href="#" class="post-tag">#cybersecurity</a>
+                              <a href="#" class="post-tag">#soar</a>
+                              <a href="#" class="post-tag">#open-source</a>
+                              <a href="#" class="post-tag">#security-operations</a>
+                              <a href="#" class="post-tag">#ai</a>
+                        </div>
+
+                        <div class="newsletter">
+                              <div class="newsletter-icon"><span class="material-symbols-outlined">mail</span></div>
+                              <h3>Subscribe to my newsletter</h3>
+                              <p>Get the latest articles on cybersecurity, AI, and developer tools delivered to your
+                                    inbox.</p>
+                              <form class="newsletter-form" action="https://formspree.io/f/mgolbkjp" method="POST"><input type="email"
+                                          name="email" class="newsletter-input" placeholder="your@email.com" /><button type="submit"
+                                          class="btn-primary">Subscribe</button></form>
+                        </div>
+                  </article>
+                  <nav class="post-nav">
+                        <a href="post-ai-soc.html" class="post-nav-link"><span class="post-nav-label">Previous
+                                    Post</span><span class="post-nav-title">AI Agents vs. Level-1 SOC
+                                    Analysts</span></a>
+                        <a href="post-pci-dss.html" class="post-nav-link next"><span class="post-nav-label">Next
+                                    Post</span><span class="post-nav-title">PCI DSS Audit + Wazuh:
+                                    Audit-Ready</span></a>
+                  </nav>
+            </div>
+      </main>
+      <footer class="site-footer">
+            <div class="container-narrow footer-bottom">
+                  <div>
+                        <div class="author-name">Joel Yang</div><span
+                              style="font-size:0.75rem;color:var(--text-muted);">© 2025. All rights reserved.</span>
+                  </div>
+                  <div class="footer-bottom-links"><a href="#">Twitter</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
+                  </div>
+            </div>
+      </footer>
+      <script src="script.js"></script>
+</body>
+
+</html>

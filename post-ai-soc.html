@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+      <title>AI Agents vs. Level-1 SOC Analysts — Th1nk3r</title>
+      <meta name="description"
+            content="Augmentation, automation, or obsolescence? Comparing AI SOC agents with human Level-1 analysts and the rise of the Centaur Analyst." />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+      <header class="site-header">
+            <div class="container-narrow header-inner">
+                  <a href="index.html" class="logo"><span class="logo-emoji">💡</span><span class="logo-text">Th1nk3r by
+                              Joel Yang</span></a>
+                  <nav class="desktop-nav"><a href="index.html">Home</a><a href="about.html">About</a><button
+                              class="theme-toggle" aria-label="Toggle theme"><span
+                                    class="material-symbols-outlined">lightbulb</span></button></nav>
+                  <button class="mobile-menu-btn" aria-label="Open menu"><span
+                              class="material-symbols-outlined">menu</span></button>
+            </div>
+            <nav class="mobile-nav container-narrow"><a href="index.html">Home</a><a href="about.html">About</a><button
+                        class="theme-toggle" aria-label="Toggle theme"
+                        style="align-self:flex-start;margin-top:8px;"><span
+                              class="material-symbols-outlined">lightbulb</span></button></nav>
+      </header>
+
+      <main class="main-content">
+            <div class="container-narrow" style="padding-top:16px;padding-bottom:64px;">
+                  <a href="index.html" class="back-link"><span class="material-symbols-outlined">arrow_back</span> Back
+                        to Blog</a>
+                  <article>
+                        <div class="post-category"><span>AI</span><span>•</span><span>Security Operations</span></div>
+                        <h1 class="post-title">AI Agents vs. Level-1 SOC Analysts: Augmentation, Automation, or
+                              Obsolescence?</h1>
+                        <div class="post-meta">
+                              <div class="post-author">
+                                    <div class="post-avatar"><img
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpEpqXRf9MrIYskZwQ328luZjewXS6t68YvEfqnZR9LUVB8cMy2mOqRy-E6wqmXRv7L7I9ISRkRpsagVyy4gRitZijJ88qtrPSydvUAwNXwlvfjvxOSbXsPBAvrFVHLU-EZgkh0q46eEEGGDh5eOMYoeF82ndACqzW_oajVG_GOBLv9xRQc93b0584NP8CXhW7INCFlQhTVy9lCed78y7mD6lnCDS0oVlBzckHoEQioyeTP4GS6iCQNrFJXGS_ckYJ9rAQsOVqnq0"
+                                                alt="Joel Yang" /></div>
+                                    <div>
+                                          <div class="author-name">Joel Yang</div>
+                                          <div class="author-role">Security Engineer</div>
+                                    </div>
+                              </div>
+                              <div class="post-date-info">
+                                    <div class="post-date">Apr 27, 2025</div>
+                                    <div class="post-read-time">3 min read</div>
+                              </div>
+                        </div>
+
+                        <div class="post-body">
+                              <p>The security operations center is changing. AI agents are no longer science fiction —
+                                    they're shipping as products. But does that mean Level-1 SOC analysts are heading
+                                    for obsolescence? Let's break it down.</p>
+
+                              <h2 class="font-mono">The Modern L1 SOC Analyst: Roles &amp; Realities</h2>
+                              <p>Level-1 SOC Analysts are the first responders in cyber defense. Their daily grind
+                                    includes:</p>
+                              <ul>
+                                    <li><strong>Alert Triage &amp; Enrichment</strong>: Reviewing SIEM/EDR/NDR alerts,
+                                          adding context, assigning severity.</li>
+                                    <li><strong>Initial Investigation</strong>: Running queries, extracting IOCs,
+                                          escalating true positives.</li>
+                                    <li><strong>Documentation &amp; Handoff</strong>: Drafting clear incident briefs for
+                                          Tier-2/Tier-3 teams.</li>
+                              </ul>
+                              <p>The pain point? <strong>Alert overload</strong>. Up to 30% of alerts are never
+                                    addressed, fuelling fatigue and burnout.</p>
+
+                              <h2 class="font-mono">AI SOC Agents: The New Teammate</h2>
+                              <p>Agentic AI isn't just a chatbot; it's a reasoning engine that can interact with
+                                    security tools. Key capabilities:</p>
+                              <ul>
+                                    <li><strong>Autonomous Reasoning</strong>: Not just matching signatures; analyzing
+                                          behaviour.</li>
+                                    <li><strong>Tools Integration</strong>: Connecting with APIs to gather data and
+                                          execute containment.</li>
+                                    <li><strong>Scalability</strong>: Processing thousands of alerts simultaneously.
+                                    </li>
+                              </ul>
+
+                              <h2 class="font-mono">Comparing the Two</h2>
+                              <div style="overflow-x:auto;margin:24px 0;">
+                                    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+                                          <thead>
+                                                <tr style="border-bottom:2px solid var(--border);text-align:left;">
+                                                      <th
+                                                            style="padding:12px 16px;font-family:'Roboto Mono',monospace;font-size:0.8rem;">
+                                                            Capability</th>
+                                                      <th
+                                                            style="padding:12px 16px;font-family:'Roboto Mono',monospace;font-size:0.8rem;">
+                                                            Human Analyst</th>
+                                                      <th
+                                                            style="padding:12px 16px;font-family:'Roboto Mono',monospace;font-size:0.8rem;">
+                                                            AI SOC Agent</th>
+                                                </tr>
+                                          </thead>
+                                          <tbody>
+                                                <tr style="border-bottom:1px solid var(--border);">
+                                                      <td style="padding:10px 16px;">Context &amp; Nuance</td>
+                                                      <td style="padding:10px 16px;">Reads between the lines, spots
+                                                            motives</td>
+                                                      <td style="padding:10px 16px;">Pattern-based; misses edge cases
+                                                      </td>
+                                                </tr>
+                                                <tr style="border-bottom:1px solid var(--border);">
+                                                      <td style="padding:10px 16px;">Speed &amp; Scale</td>
+                                                      <td style="padding:10px 16px;">Limited by fatigue and shift
+                                                            coverage</td>
+                                                      <td style="padding:10px 16px;">Milliseconds per alert, 24/7 uptime
+                                                      </td>
+                                                </tr>
+                                                <tr style="border-bottom:1px solid var(--border);">
+                                                      <td style="padding:10px 16px;">Adaptability</td>
+                                                      <td style="padding:10px 16px;">Tweaks playbooks on the fly</td>
+                                                      <td style="padding:10px 16px;">Requires retraining or rule updates
+                                                      </td>
+                                                </tr>
+                                                <tr style="border-bottom:1px solid var(--border);">
+                                                      <td style="padding:10px 16px;">Consistency</td>
+                                                      <td style="padding:10px 16px;">Varies by experience and workload
+                                                      </td>
+                                                      <td style="padding:10px 16px;">Uniform execution, zero drift</td>
+                                                </tr>
+                                                <tr>
+                                                      <td style="padding:10px 16px;">Compliance &amp; Audit</td>
+                                                      <td style="padding:10px 16px;">Human-verifiable decision trails
+                                                      </td>
+                                                      <td style="padding:10px 16px;">Explainability improving but
+                                                            nascent</td>
+                                                </tr>
+                                          </tbody>
+                                    </table>
+                              </div>
+
+                              <blockquote>
+                                    <p>"AI handles the grind; humans bring the brain. Blend both to crush SOC
+                                          objectives."</p>
+                              </blockquote>
+
+                              <h2 class="font-mono">The Verdict: Augmentation, Not Replacement (Yet)</h2>
+                              <p>The future belongs to the <strong>"Centaur Analyst"</strong> — a human augmented by AI
+                                    agents. AI handles the 80% noise, allowing humans to tackle the critical 20%. The
+                                    result? Faster mean time to respond, fewer missed alerts, and analysts who actually
+                                    get to do the interesting work.</p>
+
+                              <h2 class="font-mono">Modern AI SOC Solutions to Watch</h2>
+                              <ul>
+                                    <li><strong>Prophet Security</strong>: Vendor-agnostic Autonomous SOC generating
+                                          transparent Python playbooks, visual link analysis, and guided remediation.
+                                    </li>
+                                    <li><strong>Intezer</strong>: Automated triage and evidence collection for endpoint
+                                          and cloud alerts.</li>
+                                    <li><strong>D3 Security</strong>: Smart SOAR with integrated AI for playbook
+                                          automation.</li>
+                              </ul>
+
+                              <p>Human instincts or AI horsepower — what's your go-to SOC combo?</p>
+                        </div>
+
+                        <div class="post-tags">
+                              <a href="#" class="post-tag">#cybersecurity</a>
+                              <a href="#" class="post-tag">#artificial-intelligence</a>
+                              <a href="#" class="post-tag">#security-operations</a>
+                              <a href="#" class="post-tag">#automation</a>
+                              <a href="#" class="post-tag">#incident-response</a>
+                        </div>
+
+                        <div class="newsletter">
+                              <div class="newsletter-icon"><span class="material-symbols-outlined">mail</span></div>
+                              <h3>Subscribe to my newsletter</h3>
+                              <p>Get the latest articles on cybersecurity, AI, and developer tools delivered to your
+                                    inbox.</p>
+                              <form class="newsletter-form" action="https://formspree.io/f/mgolbkjp" method="POST"><input type="email"
+                                          name="email" class="newsletter-input" placeholder="your@email.com" /><button type="submit"
+                                          class="btn-primary">Subscribe</button></form>
+                        </div>
+                  </article>
+                  <nav class="post-nav">
+                        <a href="post-blackhat.html" class="post-nav-link"><span class="post-nav-label">Previous
+                                    Post</span><span class="post-nav-title">Kali Purple Hub at Black Hat Asia
+                                    2025</span></a>
+                        <a href="post-ai-soar.html" class="post-nav-link next"><span class="post-nav-label">Next
+                                    Post</span><span class="post-nav-title">AI‑SOAR + Wazuh: From Toy Demo to Real SOC
+                                    Powerhouse</span></a>
+                  </nav>
+            </div>
+      </main>
+      <footer class="site-footer">
+            <div class="container-narrow footer-bottom">
+                  <div>
+                        <div class="author-name">Joel Yang</div><span
+                              style="font-size:0.75rem;color:var(--text-muted);">© 2025. All rights reserved.</span>
+                  </div>
+                  <div class="footer-bottom-links"><a href="#">Twitter</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
+                  </div>
+            </div>
+      </footer>
+      <script src="script.js"></script>
+</body>
+
+</html>

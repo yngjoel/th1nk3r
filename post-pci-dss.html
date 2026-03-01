@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+      <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+      <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+      <meta http-equiv="X-Frame-Options" content="DENY" />
+      <meta name="referrer" content="strict-origin-when-cross-origin" />
+      <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+      <title>PCI DSS Audit + Wazuh: How to Be Audit-Ready — Th1nk3r</title>
+      <meta name="description"
+            content="A verified, technical walkthrough of preparing Wazuh SIEM evidence for PCI DSS — from logs and FIM to RBAC and alerting." />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+      <header class="site-header">
+            <div class="container-narrow header-inner">
+                  <a href="index.html" class="logo"><span class="logo-emoji">💡</span><span class="logo-text">Th1nk3r by
+                              Joel Yang</span></a>
+                  <nav class="desktop-nav"><a href="index.html">Home</a><a href="about.html">About</a><button
+                              class="theme-toggle" aria-label="Toggle theme"><span
+                                    class="material-symbols-outlined">lightbulb</span></button></nav>
+                  <button class="mobile-menu-btn" aria-label="Open menu"><span
+                              class="material-symbols-outlined">menu</span></button>
+            </div>
+            <nav class="mobile-nav container-narrow"><a href="index.html">Home</a><a href="about.html">About</a><button
+                        class="theme-toggle" aria-label="Toggle theme"
+                        style="align-self:flex-start;margin-top:8px;"><span
+                              class="material-symbols-outlined">lightbulb</span></button></nav>
+      </header>
+
+      <main class="main-content">
+            <div class="container-narrow" style="padding-top:16px;padding-bottom:64px;">
+                  <a href="index.html" class="back-link"><span class="material-symbols-outlined">arrow_back</span> Back
+                        to Blog</a>
+                  <article>
+                        <div class="post-category"><span>Compliance</span><span>•</span><span>SIEM</span></div>
+                        <h1 class="post-title">How a PCI DSS Audit Made Me Rethink Wazuh — and How You Can Be
+                              Audit-Ready Too</h1>
+                        <div class="post-meta">
+                              <div class="post-author">
+                                    <div class="post-avatar"><img
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpEpqXRf9MrIYskZwQ328luZjewXS6t68YvEfqnZR9LUVB8cMy2mOqRy-E6wqmXRv7L7I9ISRkRpsagVyy4gRitZijJ88qtrPSydvUAwNXwlvfjvxOSbXsPBAvrFVHLU-EZgkh0q46eEEGGDh5eOMYoeF82ndACqzW_oajVG_GOBLv9xRQc93b0584NP8CXhW7INCFlQhTVy9lCed78y7mD6lnCDS0oVlBzckHoEQioyeTP4GS6iCQNrFJXGS_ckYJ9rAQsOVqnq0"
+                                                alt="Joel Yang" /></div>
+                                    <div>
+                                          <div class="author-name">Joel Yang</div>
+                                          <div class="author-role">Security Engineer</div>
+                                    </div>
+                              </div>
+                              <div class="post-date-info">
+                                    <div class="post-date">Nov 12, 2025</div>
+                                    <div class="post-read-time">5 min read</div>
+                              </div>
+                        </div>
+
+                        <div class="post-body">
+                              <p>When it comes to PCI DSS v4.0, one of the most heavily audited requirements is
+                                    <strong>Requirement 10</strong> — "Log and monitor all access to system components."
+                                    Your SIEM is the backbone of compliance evidence. This guide walks through what I
+                                    learned during a real PCI DSS audit — what worked, what didn't, and what specific
+                                    evidence you can collect from Wazuh.
+                              </p>
+
+                              <h2 class="font-mono">1. Confirm SIEM Coverage and Scope</h2>
+                              <p><em>PCI DSS Requirement: 10.3.4</em> — Ensure all in-scope systems are monitored. The
+                                    first thing an auditor will ask: "Which systems are sending logs to your SIEM?"</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">CLI Evidence</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code>/var/ossec/bin/agent_control -l</code></pre>
+                              </div>
+                              <p>This lists every connected agent and its status. Save the output as audit proof. Also
+                                    check your agentless/syslog configuration:</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span
+                                                class="code-block-filename">/var/ossec/etc/ossec.conf</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-type">&lt;localfile&gt;</span>
+  <span class="syn-type">&lt;log_format&gt;</span><span class="syn-string">syslog</span><span class="syn-type">&lt;/log_format&gt;</span>
+  <span class="syn-type">&lt;location&gt;</span><span class="syn-string">/var/log/nginx/access.log</span><span class="syn-type">&lt;/location&gt;</span>
+<span class="syn-type">&lt;/localfile&gt;</span></code></pre>
+                              </div>
+
+                              <h2 class="font-mono">2. Show Log Collection and Event Details</h2>
+                              <p><em>PCI DSS Requirement: 10.2 &amp; 10.3</em> — Track user activities and system
+                                    events. Enable JSON archiving:</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span
+                                                class="code-block-filename">/var/ossec/etc/ossec.conf</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-type">&lt;global&gt;</span>
+  <span class="syn-type">&lt;logall_json&gt;</span><span class="syn-string">yes</span><span class="syn-type">&lt;/logall_json&gt;</span>
+<span class="syn-type">&lt;/global&gt;</span></code></pre>
+                              </div>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">Restart
+                                                manager</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code>systemctl restart wazuh-manager</code></pre>
+                              </div>
+
+                              <h2 class="font-mono">3. Prove Time Synchronization</h2>
+                              <p><em>PCI DSS Requirement: 10.6.x</em> — Ensure consistent time sources. Wazuh relies on
+                                    system time:</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">NTP Check</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code>chronyc sources</code></pre>
+                              </div>
+                              <p>Include <code>/etc/chrony.conf</code> from both the manager and agents to prove log
+                                    alignment across all sources.</p>
+
+                              <h2 class="font-mono">4. Demonstrate Log Retention and Integrity</h2>
+                              <p><em>PCI DSS Requirement: 10.5 &amp; 10.7</em> — Protect and retain logs.</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">Archive
+                                                Evidence</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code>ls -l /var/ossec/logs/archives/
+lsattr /var/ossec/logs/archives/   <span class="syn-comment"># 'i' flag = tamper protection</span></code></pre>
+                              </div>
+
+                              <h2 class="font-mono">5. File Integrity Monitoring (FIM)</h2>
+                              <p><em>PCI DSS Requirement: 11.5.1</em> — Detect unauthorized file changes.</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span
+                                                class="code-block-filename">/var/ossec/etc/ossec.conf</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-type">&lt;syscheck&gt;</span>
+  <span class="syn-type">&lt;directories</span> <span class="syn-function">check_all</span>=<span class="syn-string">"yes"</span><span class="syn-type">&gt;</span><span class="syn-string">/etc,/usr/bin,/var/www</span><span class="syn-type">&lt;/directories&gt;</span>
+  <span class="syn-type">&lt;realtime&gt;</span><span class="syn-string">yes</span><span class="syn-type">&lt;/realtime&gt;</span>
+<span class="syn-type">&lt;/syscheck&gt;</span></code></pre>
+                              </div>
+
+                              <h2 class="font-mono">6. Access Control and RBAC</h2>
+                              <p><em>PCI DSS Requirement: 7.x &amp; 8.x</em> — Restrict system access and enforce
+                                    authentication. Wazuh uses OpenSearch Security for role-based access control. Take
+                                    screenshots of internal users, roles, and role mappings. Session timeout config:</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span
+                                                class="code-block-filename">/etc/wazuh-dashboard/opensearch_dashboards.yml</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code>opensearch_security.session.ttl: <span class="syn-number">900000</span>    <span class="syn-comment"># 15 minutes</span>
+opensearch_security.cookie.ttl: <span class="syn-number">900000</span></code></pre>
+                              </div>
+
+                              <h2 class="font-mono">7. Alerting and Notifications</h2>
+                              <p><em>PCI DSS Requirement: 10.4 &amp; 12.10</em> — Review and respond to alerts.</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span
+                                                class="code-block-filename">/var/ossec/etc/ossec.conf</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code><span class="syn-type">&lt;alerts&gt;</span>
+  <span class="syn-type">&lt;log_alert_level&gt;</span><span class="syn-number">3</span><span class="syn-type">&lt;/log_alert_level&gt;</span>
+  <span class="syn-type">&lt;email_alert_level&gt;</span><span class="syn-number">10</span><span class="syn-type">&lt;/email_alert_level&gt;</span>
+  <span class="syn-type">&lt;email_to&gt;</span><span class="syn-string">security@yourdomain.com</span><span class="syn-type">&lt;/email_to&gt;</span>
+<span class="syn-type">&lt;/alerts&gt;</span></code></pre>
+                              </div>
+
+                              <h2 class="font-mono">Organizing Your Evidence Pack</h2>
+                              <p>Each screenshot should include date, hostname, and navigation path for traceability.
+                                    Recommended directory structure:</p>
+                              <div class="code-block">
+                                    <div class="code-block-header"><span class="code-block-filename">Evidence Directory
+                                                Structure</span>
+                                          <div class="code-block-dots"><span></span><span></span><span></span></div>
+                                    </div>
+                                    <pre><code>PCI_DSS_Evidence/
+├── 01_SIEM_Coverage_and_Sources/
+├── 02_Log_Collection_and_Event_Evidence/
+├── 03_Time_Synchronization/
+├── 04_Log_Retention_and_Integrity/
+├── 05_File_Integrity_Monitoring/
+├── 06_Access_Control_and_RBAC/
+├── 07_Alerting_and_Notifications/
+├── 08_Evidence_Tracker/
+└── README.md</code></pre>
+                              </div>
+
+                              <blockquote>
+                                    <p>"Passing a PCI DSS audit for your SIEM isn't about paperwork — it's about
+                                          evidence. Compliance stops being reactive and becomes a reflection of strong
+                                          operational security."</p>
+                              </blockquote>
+                        </div>
+
+                        <div class="post-tags">
+                              <a href="#" class="post-tag">#wazuh</a>
+                              <a href="#" class="post-tag">#pci-dss</a>
+                              <a href="#" class="post-tag">#cybersecurity</a>
+                              <a href="#" class="post-tag">#siem</a>
+                              <a href="#" class="post-tag">#compliance</a>
+                        </div>
+
+                        <div class="newsletter">
+                              <div class="newsletter-icon"><span class="material-symbols-outlined">mail</span></div>
+                              <h3>Subscribe to my newsletter</h3>
+                              <p>Get the latest articles on cybersecurity, compliance, and SIEM engineering delivered to
+                                    your inbox.</p>
+                              <form class="newsletter-form" action="https://formspree.io/f/mgolbkjp" method="POST">
+                                    <input type="email" name="email" class="newsletter-input"
+                                          placeholder="your@email.com" /><button type="submit"
+                                          class="btn-primary">Subscribe</button></form>
+                        </div>
+                  </article>
+                  <nav class="post-nav">
+                        <a href="post-ai-soar.html" class="post-nav-link"><span class="post-nav-label">Previous
+                                    Post</span><span class="post-nav-title">AI‑SOAR + Wazuh: From Toy Demo to Real SOC
+                                    Powerhouse</span></a>
+                        <a href="post-linguistic-frontier.html" class="post-nav-link next"><span
+                                    class="post-nav-label">Next
+                                    Post</span><span class="post-nav-title">The Linguistic Frontier: Strategic Evolution
+                                    of Threat Intelligence</span></a>
+                  </nav>
+            </div>
+      </main>
+      <footer class="site-footer">
+            <div class="container-narrow footer-bottom">
+                  <div>
+                        <div class="author-name">Joel Yang</div><span
+                              style="font-size:0.75rem;color:var(--text-muted);">© 2025. All rights reserved.</span>
+                  </div>
+                  <div class="footer-bottom-links"><a href="#">Twitter</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
+                  </div>
+            </div>
+      </footer>
+      <script src="script.js"></script>
+</body>
+
+</html>

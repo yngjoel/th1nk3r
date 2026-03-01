@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+      <title>Kali Purple Hub, MALCOLM &amp; Autopilot at Black Hat Asia 2025 — Th1nk3r</title>
+      <meta name="description"
+            content="What I learned about Kali Purple Hub, MALCOLM, and Autopilot at Black Hat Asia 2025 — a full SOC simulation in a box." />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+      <header class="site-header">
+            <div class="container-narrow header-inner">
+                  <a href="index.html" class="logo"><span class="logo-emoji">💡</span><span class="logo-text">Th1nk3r by
+                              Joel Yang</span></a>
+                  <nav class="desktop-nav"><a href="index.html">Home</a><a href="about.html">About</a><button
+                              class="theme-toggle" aria-label="Toggle theme"><span
+                                    class="material-symbols-outlined">lightbulb</span></button></nav>
+                  <button class="mobile-menu-btn" aria-label="Open menu"><span
+                              class="material-symbols-outlined">menu</span></button>
+            </div>
+            <nav class="mobile-nav container-narrow"><a href="index.html">Home</a><a href="about.html">About</a><button
+                        class="theme-toggle" aria-label="Toggle theme"
+                        style="align-self:flex-start;margin-top:8px;"><span
+                              class="material-symbols-outlined">lightbulb</span></button></nav>
+      </header>
+
+      <main class="main-content">
+            <div class="container-narrow" style="padding-top:16px;padding-bottom:64px;">
+                  <a href="index.html" class="back-link"><span class="material-symbols-outlined">arrow_back</span> Back
+                        to Blog</a>
+                  <article>
+                        <div class="post-category"><span>Blue Team</span><span>•</span><span>Conference</span></div>
+                        <h1 class="post-title">What I Learned About Kali Purple Hub, MALCOLM, and Autopilot at Black Hat
+                              Asia 2025</h1>
+                        <div class="post-meta">
+                              <div class="post-author">
+                                    <div class="post-avatar"><img
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpEpqXRf9MrIYskZwQ328luZjewXS6t68YvEfqnZR9LUVB8cMy2mOqRy-E6wqmXRv7L7I9ISRkRpsagVyy4gRitZijJ88qtrPSydvUAwNXwlvfjvxOSbXsPBAvrFVHLU-EZgkh0q46eEEGGDh5eOMYoeF82ndACqzW_oajVG_GOBLv9xRQc93b0584NP8CXhW7INCFlQhTVy9lCed78y7mD6lnCDS0oVlBzckHoEQioyeTP4GS6iCQNrFJXGS_ckYJ9rAQsOVqnq0"
+                                                alt="Joel Yang" /></div>
+                                    <div>
+                                          <div class="author-name">Joel Yang</div>
+                                          <div class="author-role">Security Engineer</div>
+                                    </div>
+                              </div>
+                              <div class="post-date-info">
+                                    <div class="post-date">Apr 9, 2025</div>
+                                    <div class="post-read-time">4 min read</div>
+                              </div>
+                        </div>
+
+                        <div class="post-body">
+                              <p>I recently had the chance to attend <strong>Black Hat Asia 2025 in Singapore</strong>.
+                                    While it wasn't the largest con out there, it turned out to be one of the more
+                                    insightful ones — especially for blue teamers like myself.</p>
+                              <p>What stood out most wasn't the vendor booths or CISO panels, but a hands-on
+                                    <strong>Kali Purple Workshop</strong> that showcased something truly game-changing
+                                    for defensive security education: a full-blown SOC simulation in a box — powered by
+                                    <strong>Kali Purple Hub</strong>, <strong>MALCOLM</strong>, and
+                                    <strong>Autopilot</strong>.</p>
+
+                              <h2 class="font-mono">Kali Purple Hub: A Playground for Defenders</h2>
+                              <p>One of the presenters from Offensive Security made a striking point:</p>
+                              <blockquote>
+                                    <p>"Companies spend millions building SIEM infrastructure. But where do you go if
+                                          you just want to learn?"</p>
+                              </blockquote>
+                              <p><strong>Kali Purple Hub</strong> solves that problem. It offers a fully preconfigured
+                                    defensive lab where you can:</p>
+                              <ul>
+                                    <li>Analyze attacks end-to-end (from reconnaissance to exfiltration).</li>
+                                    <li>Trigger real-time alerts and detections.</li>
+                                    <li>Explore threat hunting workflows.</li>
+                                    <li>Understand how correlation, dashboards, and triage work in a real SOC.</li>
+                              </ul>
+
+                              <h2 class="font-mono">Dashboards That Actually Mean Something</h2>
+                              <p>One of the most satisfying parts? Building dashboards that aren't just cosmetic. In
+                                    Kali Purple Hub, you can:</p>
+                              <ul>
+                                    <li>Create visualizations based on <strong>Suricata alerts</strong>, <strong>Zeek
+                                                logs</strong>, or <strong>Wazuh telemetry</strong>.</li>
+                                    <li>Map your detections directly to the <strong>MITRE ATT&amp;CK framework</strong>.
+                                    </li>
+                                    <li>See how a single network event propagates across different layers of the stack.
+                                    </li>
+                              </ul>
+
+                              <h2 class="font-mono">Incident Alerts &amp; Case Workflow</h2>
+                              <p>The hub doesn't just dump logs; it teaches <strong>incident workflow</strong>. You're
+                                    not just looking at a "Critical" alert; you're learning how to:</p>
+                              <ul>
+                                    <li><strong>Triage</strong>: Is this a false positive or a legitimate threat?</li>
+                                    <li><strong>Investigate</strong>: What did the attacker do before and after this
+                                          alert?</li>
+                                    <li><strong>Remediate</strong>: What steps are needed to contain the threat?</li>
+                              </ul>
+
+                              <h2 class="font-mono">Optional SIEM Swap: Wazuh as a Drop-in</h2>
+                              <p>While the default stack often highlights Elastic, the workshop emphasized the
+                                    <strong>modularity</strong> of Kali Purple. Wazuh is often the "sweet spot" for many
+                                    practitioners because of its built-in FIM, active response, and regulatory
+                                    compliance modules (like PCI DSS). Just note: Wazuh needs fine-tuning to fully slot
+                                    into the Kali Purple ecosystem.</p>
+
+                              <h2 class="font-mono">MALCOLM + Arkime: Network Telemetry That Goes Deep</h2>
+                              <p>If Kali Purple Hub is the brain, <strong>MALCOLM (and Arkime)</strong> is the nervous
+                                    system. It provides a powerful, open-source network traffic analysis toolset,
+                                    including session data, file extraction from network streams, and protocol analysis.
+                                    It's the kind of deep-dive visibility you usually only get in high-end enterprise
+                                    NDR solutions.</p>
+
+                              <h2 class="font-mono">Kali Autopilot: Simulated Attacks Done Right</h2>
+                              <p>Detection is useless if you have nothing to detect. <strong>Kali Autopilot</strong>
+                                    lets you simulate realistic attack traffic without manually running exploits every
+                                    time. It generates the kind of messy, realistic traffic that actually tests an
+                                    analyst's ability to distinguish between a routine admin task and a lateral movement
+                                    attempt.</p>
+
+                              <h2 class="font-mono">Extending Kali Purple</h2>
+                              <p>The project is modular, Docker-based, and designed for learning. Want to add
+                                    <strong>Velociraptor</strong> for endpoint forensics? <strong>Shuffle</strong> for
+                                    SOAR workflows? <strong>Grafana</strong> for custom telemetry? Go ahead — it's built
+                                    to grow with you.</p>
+
+                              <blockquote>
+                                    <p>"You don't need to work at a Fortune 500 to learn SIEM engineering. You don't
+                                          need a data center to practice threat hunting. You just need the right tools
+                                          and curiosity to dig in."</p>
+                              </blockquote>
+                        </div>
+
+                        <div class="post-tags">
+                              <a href="#" class="post-tag">#blue-team</a>
+                              <a href="#" class="post-tag">#siem</a>
+                              <a href="#" class="post-tag">#threat-hunting</a>
+                              <a href="#" class="post-tag">#kali-linux</a>
+                              <a href="#" class="post-tag">#cybersecurity-training</a>
+                        </div>
+
+                        <div class="newsletter">
+                              <div class="newsletter-icon"><span class="material-symbols-outlined">mail</span></div>
+                              <h3>Subscribe to my newsletter</h3>
+                              <p>Get the latest articles on cybersecurity, SIEM engineering, and developer tools
+                                    delivered to your inbox.</p>
+                              <form class="newsletter-form" action="https://formspree.io/f/mgolbkjp" method="POST"><input type="email"
+                                          name="email" class="newsletter-input" placeholder="your@email.com" /><button type="submit"
+                                          class="btn-primary">Subscribe</button></form>
+                        </div>
+                  </article>
+                  <nav class="post-nav">
+                        <a href="post-f1-ai.html" class="post-nav-link"><span class="post-nav-label">Previous
+                                    Post</span><span class="post-nav-title">F1 Meets AI: Australian Grand Prix
+                                    2025</span></a>
+                        <a href="post-ai-soc.html" class="post-nav-link next"><span class="post-nav-label">Next
+                                    Post</span><span class="post-nav-title">AI Agents vs. Level-1 SOC
+                                    Analysts</span></a>
+                  </nav>
+            </div>
+      </main>
+      <footer class="site-footer">
+            <div class="container-narrow footer-bottom">
+                  <div>
+                        <div class="author-name">Joel Yang</div><span
+                              style="font-size:0.75rem;color:var(--text-muted);">© 2025. All rights reserved.</span>
+                  </div>
+                  <div class="footer-bottom-links"><a href="#">Twitter</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
+                  </div>
+            </div>
+      </footer>
+      <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security Headers (OWASP / MITRE ATT&CK Hardening) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src 'self' https://fonts.gstatic.com;
+    img-src 'self' https://lh3.googleusercontent.com data:;
+    connect-src 'self' https://formspree.io;
+    form-action 'self' https://formspree.io;
+    frame-ancestors 'none';
+    base-uri 'self';
+    object-src 'none';
+    upgrade-insecure-requests;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+
+      <title>F1 Meets AI: Predicting the Australian Grand Prix 2025 — Th1nk3r</title>
+      <meta name="description"
+            content="Using machine learning to predict the winner of the Australian Grand Prix 2025 — Logistic Regression, Random Forest, and the pitfalls of class imbalance." />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet" crossorigin="anonymous" />
+      <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+      <header class="site-header">
+            <div class="container-narrow header-inner">
+                  <a href="index.html" class="logo"><span class="logo-emoji">💡</span><span class="logo-text">Th1nk3r by
+                              Joel Yang</span></a>
+                  <nav class="desktop-nav"><a href="index.html">Home</a><a href="about.html">About</a><button
+                              class="theme-toggle" aria-label="Toggle theme"><span
+                                    class="material-symbols-outlined">lightbulb</span></button></nav>
+                  <button class="mobile-menu-btn" aria-label="Open menu"><span
+                              class="material-symbols-outlined">menu</span></button>
+            </div>
+            <nav class="mobile-nav container-narrow"><a href="index.html">Home</a><a href="about.html">About</a><button
+                        class="theme-toggle" aria-label="Toggle theme"
+                        style="align-self:flex-start;margin-top:8px;"><span
+                              class="material-symbols-outlined">lightbulb</span></button></nav>
+      </header>
+
+      <main class="main-content">
+            <div class="container-narrow" style="padding-top:16px;padding-bottom:64px;">
+                  <a href="index.html" class="back-link"><span class="material-symbols-outlined">arrow_back</span> Back
+                        to Blog</a>
+                  <article>
+                        <div class="post-category"><span>Machine Learning</span><span>•</span><span>Sports
+                                    Analytics</span></div>
+                        <h1 class="post-title">F1 Meets AI: Predicting Who's Taking the Crown in Australian Grand Prix
+                              2025 🏎️</h1>
+                        <div class="post-meta">
+                              <div class="post-author">
+                                    <div class="post-avatar"><img
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpEpqXRf9MrIYskZwQ328luZjewXS6t68YvEfqnZR9LUVB8cMy2mOqRy-E6wqmXRv7L7I9ISRkRpsagVyy4gRitZijJ88qtrPSydvUAwNXwlvfjvxOSbXsPBAvrFVHLU-EZgkh0q46eEEGGDh5eOMYoeF82ndACqzW_oajVG_GOBLv9xRQc93b0584NP8CXhW7INCFlQhTVy9lCed78y7mD6lnCDS0oVlBzckHoEQioyeTP4GS6iCQNrFJXGS_ckYJ9rAQsOVqnq0"
+                                                alt="Joel Yang" /></div>
+                                    <div>
+                                          <div class="author-name">Joel Yang</div>
+                                          <div class="author-role">Security Engineer</div>
+                                    </div>
+                              </div>
+                              <div class="post-date-info">
+                                    <div class="post-date">Mar 10, 2025</div>
+                                    <div class="post-read-time">4 min read</div>
+                              </div>
+                        </div>
+
+                        <div class="post-body">
+                              <p>What happens when data science meets professional racing? In this project, I explored
+                                    whether machine learning could predict the winner of the upcoming Australian Grand
+                                    Prix. The results were fascinating — both for what the models got right, and what
+                                    they couldn't account for.</p>
+
+                              <h2 class="font-mono">The Dataset</h2>
+                              <p>I built a multi-faceted dataset that included historical race results, environmental
+                                    conditions (weather, track temperature), and performance metrics like qualifying
+                                    positions, lap times, and pit stop strategies. Feature engineering was crucial —
+                                    creating derived features like "recent form" and "track-specific performance" made a
+                                    significant difference.</p>
+
+                              <h2 class="font-mono">The Models</h2>
+                              <p>Two primary machine learning approaches were tested:</p>
+                              <ul>
+                                    <li><strong>Logistic Regression</strong> — a solid baseline for classification
+                                          tasks.</li>
+                                    <li><strong>Random Forest</strong> — an ensemble method that handles non-linear
+                                          relationships well.</li>
+                              </ul>
+                              <p>Both models were optimized using standard hyperparameter tuning techniques
+                                    (GridSearchCV) and evaluated on accuracy, precision, recall, and F1-score.</p>
+
+                              <h2 class="font-mono">The Class Imbalance Problem</h2>
+                              <p>Here's where it got tricky. Both models achieved around <strong>85% accuracy</strong>,
+                                    which sounds impressive — until you realise the dataset is heavily skewed. A handful
+                                    of dominant drivers win the majority of races, which means the model can get high
+                                    accuracy by simply predicting the favourites. The precision for less frequent
+                                    outcomes was notably poor.</p>
+
+                              <blockquote>
+                                    <p>"High accuracy doesn't always mean high usefulness. When your dataset is
+                                          imbalanced, precision and recall tell the real story."</p>
+                              </blockquote>
+
+                              <h2 class="font-mono">The Prediction</h2>
+                              <p>The AI ultimately favoured a dominant contemporary driver for the win — unsurprisingly,
+                                    given the model's bias towards recent streaks and qualifying performance. But as any
+                                    F1 fan knows, anything can happen on race day: safety cars, tyre degradation, and
+                                    strategic gambles can flip the grid.</p>
+
+                              <h2 class="font-mono">Key Takeaways</h2>
+                              <ul>
+                                    <li><strong>Feature engineering</strong> matters more than model complexity.</li>
+                                    <li>Larger, more balanced datasets are essential for reliability.</li>
+                                    <li>Real-world factors (weather, crashes, team strategy) can always override
+                                          statistical predictions.</li>
+                                    <li>Sports analytics is a great domain for learning ML fundamentals.</li>
+                              </ul>
+
+                              <p>Check out the full code and analysis on <a href="#">GitHub</a>. And if you've built
+                                    your own sports prediction models, I'd love to hear about it!</p>
+                        </div>
+
+                        <div class="post-tags">
+                              <a href="#" class="post-tag">#machine-learning</a>
+                              <a href="#" class="post-tag">#formula-1</a>
+                              <a href="#" class="post-tag">#predictive-modeling</a>
+                              <a href="#" class="post-tag">#sports-analytics</a>
+                        </div>
+
+                        <div class="newsletter">
+                              <div class="newsletter-icon"><span class="material-symbols-outlined">mail</span></div>
+                              <h3>Subscribe to my newsletter</h3>
+                              <p>Get the latest articles on cybersecurity, AI, and developer tools delivered to your
+                                    inbox.</p>
+                              <form class="newsletter-form" action="https://formspree.io/f/mgolbkjp" method="POST"><input type="email"
+                                          name="email" class="newsletter-input" placeholder="your@email.com" /><button type="submit"
+                                          class="btn-primary">Subscribe</button></form>
+                        </div>
+                  </article>
+                  <nav class="post-nav">
+                        <a href="post-tig-stack.html" class="post-nav-link"><span class="post-nav-label">Previous
+                                    Post</span><span class="post-nav-title">Mastering Wazuh Monitoring with the TIG
+                                    Stack</span></a>
+                        <a href="post-blackhat.html" class="post-nav-link next"><span class="post-nav-label">Next
+                                    Post</span><span class="post-nav-title">Kali Purple Hub at Black Hat Asia
+                                    2025</span></a>
+                  </nav>
+            </div>
+      </main>
+      <footer class="site-footer">
+            <div class="container-narrow footer-bottom">
+                  <div>
+                        <div class="author-name">Joel Yang</div><span
+                              style="font-size:0.75rem;color:var(--text-muted);">© 2025. All rights reserved.</span>
+                  </div>
+                  <div class="footer-bottom-links"><a href="#">Twitter</a><a href="#">GitHub</a><a href="#">LinkedIn</a>
+                  </div>
+            </div>
+      </footer>
+      <script src="script.js"></script>
+</body>
+
+</html>
